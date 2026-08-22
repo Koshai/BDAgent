@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { api } from "@/lib/api";
-import { IconChevron, IconPlus, IconStore } from "@/components/icons";
+import { IconChevron, IconPlus, IconStores } from "@/components/icons";
 import { storeTypeLabel } from "@/lib/store-type";
 
 type StoreRow = {
@@ -30,7 +30,7 @@ export default async function StoresPage() {
       </div>
       {!stores.length ? (
         <div className="card" style={{ textAlign: "center", padding: "40px 24px" }}>
-          <IconStore size={32} style={{ color: "var(--jade)", marginBottom: 12 }} />
+          <IconStores size={32} style={{ color: "var(--jade)", marginBottom: 12 }} />
           <h2>No stores yet</h2>
           <p className="muted">Create a store, then follow Getting started to paste the snippet.</p>
           <Link className="btn" href="/app/stores/new" style={{ marginTop: 8 }}>
