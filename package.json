@@ -1,0 +1,28 @@
+{
+  "name": "bdagent",
+  "private": true,
+  "packageManager": "pnpm@11.1.2",
+  "scripts": {
+    "dev": "pnpm --filter @bdagent/widget build && pnpm --parallel --filter @bdagent/api --filter @bdagent/dashboard --filter @bdagent/widget --filter @bdagent/learner dev",
+    "dev:api": "pnpm --filter @bdagent/api dev",
+    "dev:dashboard": "pnpm --filter @bdagent/dashboard dev",
+    "dev:widget": "pnpm --filter @bdagent/widget dev",
+    "dev:learner": "pnpm --filter @bdagent/learner dev",
+    "build": "pnpm --filter @bdagent/shared build && pnpm --filter @bdagent/widget build && pnpm --filter @bdagent/api build && pnpm --filter @bdagent/dashboard build",
+    "db:up": "docker compose up -d",
+    "db:down": "docker compose down",
+    "db:push": "pnpm --filter @bdagent/api db:push",
+    "db:seed": "pnpm --filter @bdagent/api db:seed",
+    "start:api": "pnpm --filter @bdagent/api start:railway",
+    "start:dashboard": "pnpm --filter @bdagent/dashboard start"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@prisma/client",
+      "@prisma/engines",
+      "esbuild",
+      "prisma",
+      "sharp"
+    ]
+  }
+}

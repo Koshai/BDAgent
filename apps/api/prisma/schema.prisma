@@ -1,0 +1,147 @@
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "debian-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  name         String
+  stores       Store[]
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Store {
+  id             String          @id @default(cuid())
+  userId         String
+  user           User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name           String
+  siteUrl        String
+  defaultLocale  String          @default("en")
+  currency       String          @default("USD")
+  allowedDomains String[]
+  policies       String?
+  tokens         ApiToken[]
+  products       Product[]
+  conversations  Conversation[]
+  events         Event[]
+  wooConnection  WooConnection?
+  commerceKind   String          @default("unknown")
+  cartDetected   Boolean         @default(false)
+  pagesScanned   Int             @default(0)
+  offersFound    Int             @default(0)
+  scanSignals    Json?
+  lastScannedAt  DateTime?
+  storeType      String          @default("custom")
+  siteBrief      String          @default("")
+  agentTone           String  @default("friendly")
+  agentLength         String  @default("balanced")
+  suggestAlternatives Boolean @default(true)
+  askClarifying       Boolean @default(true)
+  upsellEnabled       Boolean @default(false)
+  collectEmail        Boolean @default(false)
+  extraInstructions   String  @default("")
+  autoSyncDaily       Boolean @default(false)
+  autoSyncHourUtc     Int     @default(0)
+  lastAutoSyncedAt    DateTime?
+  widgetPrimaryColor  String  @default("#0b6e4f")
+  widgetColorManual   Boolean @default(false)
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+}
+
+model ApiToken {
+  id        String   @id @default(cuid())
+  storeId   String
+  store     Store    @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  type      String
+  tokenHash String   @unique
+  prefix    String
+  createdAt DateTime @default(now())
+
+  @@index([storeId, type])
+}
+
+model Product {
+  id          String   @id @default(cuid())
+  storeId     String
+  store       Store    @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  externalId  String?
+  title       String
+  description String   @default("")
+  price       Decimal? @db.Decimal(12, 2)
+  currency    String   @default("USD")
+  url         String
+  imageUrl    String?
+  source      String
+  inStock     Boolean  @default(true)
+  categories  String[]
+  rawJson     Json?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@unique([storeId, url])
+  @@index([storeId])
+  @@index([storeId, title])
+}
+
+model Conversation {
+  id        String    @id @default(cuid())
+  storeId   String
+  store     Store     @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  visitorId String
+  locale    String    @default("en")
+  handoff   Boolean   @default(false)
+  messages  Message[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  @@index([storeId, visitorId])
+}
+
+model Message {
+  id             String       @id @default(cuid())
+  conversationId String
+  conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  role           String
+  content        String
+  products       Json?
+  createdAt      DateTime     @default(now())
+}
+
+model Event {
+  id        String   @id @default(cuid())
+  storeId   String
+  store     Store    @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  type      String
+  path      String?
+  productId String?
+  locale    String?
+  visitorId String
+  metadata  Json?
+  createdAt DateTime @default(now())
+
+  @@index([storeId, type, createdAt])
+  @@index([storeId, visitorId])
+  @@index([storeId, productId])
+}
+
+model WooConnection {
+  id                String    @id @default(cuid())
+  storeId           String    @unique
+  store             Store     @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  siteUrl           String
+  consumerKeyEnc    String
+  consumerSecretEnc String
+  lastSyncedAt      DateTime?
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+}
+

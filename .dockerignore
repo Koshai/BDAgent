@@ -1,0 +1,17 @@
+node_modules
+.pnpm-store
+.git
+.next
+dist
+apps/dashboard/.next
+apps/learner/data
+packages/widget/dist
+.env
+.env.local
+*.log
+.DS_Store
+coverage
+terminals
+agent-transcripts
+**/*.md
+!docs/railway.md

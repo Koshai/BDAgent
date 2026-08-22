@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Shop — Ghor Mart</title>
+    <meta name="generator" content="WooCommerce" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;600;700&family=Noto+Sans+Bengali:wght@400;600&display=swap" rel="stylesheet" />
+    <style>
+      :root { --woo:#7f54b3; --ink:#111; --muted:#5b5b5b; --line:#ddd; --paper:#f7f7f7; }
+      body { margin:0; font-family: Figtree, "Noto Sans Bengali", sans-serif; background: var(--paper); color: var(--ink); }
+      .woocommerce { max-width: 980px; margin: 0 auto; padding: 24px 20px 96px; }
+      header { display:flex; justify-content:space-between; align-items:baseline; margin-bottom: 18px; }
+      a { color: var(--woo); }
+      ul.products { display:grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap: 16px; list-style:none; padding:0; }
+      li.product { background:#fff; border:1px solid var(--line); padding: 0 0 14px; }
+      li.product img { width:100%; height:160px; object-fit:cover; }
+      li.product h2 { font-size: 16px; margin: 12px 14px 4px; }
+      .price { display:block; margin: 0 14px 10px; font-weight:700; }
+      .button { display:inline-block; margin: 0 14px; background: var(--woo); color:#fff; text-decoration:none; padding:8px 12px; font-size:13px; }
+      .hint { color: var(--muted); max-width: 560px; }
+    </style>
+    <script type="application/ld+json">
+      {"@context":"https://schema.org","@graph":[
+        {"@type":"Product","name":"Copper lota","url":"/demo/woo/product-lota.html","offers":{"@type":"Offer","price":890,"priceCurrency":"BDT"}},
+        {"@type":"Product","name":"Mustard oil 1L","url":"/demo/woo/product-oil.html","offers":{"@type":"Offer","price":420,"priceCurrency":"BDT"}},
+        {"@type":"Product","name":"Clay kulhar set","url":"/demo/woo/product-kulhar.html","offers":{"@type":"Offer","price":180,"priceCurrency":"BDT"}}
+      ]}
+    </script>
+  </head>
+  <body class="woocommerce woocommerce-page">
+    <div class="woocommerce">
+      <header>
+        <strong>Ghor Mart</strong>
+        <nav>
+          <a href="/demo/woo/">Shop</a> ·
+          <a href="/demo/woo/cart.html">Cart</a> ·
+          <a href="/demo/">Naksha demo</a>
+        </nav>
+      </header>
+      <p class="hint">Classic Woo layout: <code>/shop</code> paths, <code>add-to-cart</code>, and <code>data-product_id</code>. Widget token is for the Woo demo store. Order lookup: <code>1001</code> + <code>shopper@example.com</code>.</p>
+      <ul class="products">
+        <li class="product" data-product_id="101">
+          <a href="/demo/woo/product-lota.html"><img alt="" src="https://images.unsplash.com/photo-1578662996442-48f50103eca2?w=800" /><h2 class="woocommerce-loop-product__title">Copper lota</h2></a>
+          <span class="price"><span class="woocommerce-Price-amount">৳890</span></span>
+          <a class="button add_to_cart_button ajax_add_to_cart" data-product_id="101" href="/?add-to-cart=101">Add to cart</a>
+        </li>
+        <li class="product" data-product_id="102">
+          <a href="/demo/woo/product-oil.html"><img alt="" src="https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=800" /><h2 class="woocommerce-loop-product__title">Mustard oil 1L</h2></a>
+          <span class="price"><span class="woocommerce-Price-amount">৳420</span></span>
+          <a class="button add_to_cart_button ajax_add_to_cart" data-product_id="102" href="/?add-to-cart=102">Add to cart</a>
+        </li>
+        <li class="product" data-product_id="103">
+          <a href="/demo/woo/product-kulhar.html"><img alt="" src="https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=800" /><h2 class="woocommerce-loop-product__title">Clay kulhar set</h2></a>
+          <span class="price"><span class="woocommerce-Price-amount">৳180</span></span>
+          <a class="button add_to_cart_button ajax_add_to_cart" data-product_id="103" href="/?add-to-cart=103">Add to cart</a>
+        </li>
+      </ul>
+    </div>
+    <script src="/widget.js" data-token="wgt_local_woo_token_abcdefghijk123" async></script>
+  </body>
+</html>
