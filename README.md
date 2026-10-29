@@ -1,4 +1,4 @@
-# Dyotona
+# Dyotona · দ্যোতনা
 
 Embeddable AI shopping agent for small and medium ecommerce sites. Merchants paste a script tag; shoppers chat in **English** or **Bengali**; owners get catalog-aware suggestions and basic analytics.
 

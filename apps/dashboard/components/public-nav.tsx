@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { IconClose, IconMenu } from "@/components/icons";
+import { BrandLockup } from "@/components/brand-lockup";
 import { BRAND } from "@/lib/brand";
 
 export function PublicNav({
@@ -24,11 +25,11 @@ export function PublicNav({
   return (
     <>
       <nav className="m-nav">
-        <Link href="/" className="brand-mark" onClick={() => setOpen(false)}>
+        <Link href="/" className="brand-mark" onClick={() => setOpen(false)} aria-label={`${BRAND.name} ${BRAND.nameBn}`}>
           <span className="mark" aria-hidden>
-            দ্য
+            দ
           </span>
-          <strong>{BRAND.name}</strong>
+          <BrandLockup as="strong" compact />
         </Link>
         <div className="m-nav-desktop row">
           <ThemeToggle />

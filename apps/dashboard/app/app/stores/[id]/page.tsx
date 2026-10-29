@@ -55,7 +55,7 @@ export default async function StoreOverview({ params }: { params: Promise<{ id: 
     ["Widget", widget ? `Live · ${widget.prefix}…` : "Missing"],
     ["Catalog", catalogDone ? `${store._count.products} products indexed` : "Empty — scan the site"],
     ["Native cart", store.wooConnection ? "Woo keys on file" : isWoo ? "Keys needed" : "Public offers only"],
-    ["Shopper AI", llm ? "Dyotona model (on our API)" : "Catalog match only — set OPENAI_API_KEY on the API"],
+    ["Shopper AI", llm ? "Dyotona (দ্যোতনা) model" : "Catalog match only — set OPENAI_API_KEY on the API"],
     ["Inbox", `${store._count.conversations} conversations`],
   ];
 

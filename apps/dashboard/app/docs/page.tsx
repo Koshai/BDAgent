@@ -9,8 +9,8 @@ export default function DocsHome() {
       <p className="kicker">For store owners</p>
       <h1>Getting started</h1>
       <p className="lede">
-        Put {BRAND.name} on your shop in four steps. One script tag, a product index, and chat in English or বাংলা—no
-        app-store install and no renamed storefront URLs.
+        Put {BRAND.name} ({BRAND.nameBn}) on your shop in four steps. One script tag, a product index, and chat in
+        English or বাংলা—no app-store install and no renamed storefront URLs.
       </p>
 
       <p>

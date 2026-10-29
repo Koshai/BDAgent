@@ -1,9 +1,9 @@
 import "./globals.css";
 import { Providers } from "@/components/providers";
-import { BRAND } from "@/lib/brand";
+import { brandPair, BRAND } from "@/lib/brand";
 
 export const metadata = {
-  title: BRAND.name,
+  title: brandPair(),
   description: BRAND.description,
   metadataBase: new URL(process.env.NEXTAUTH_URL || process.env.AUTH_URL || "http://localhost:3000"),
 };

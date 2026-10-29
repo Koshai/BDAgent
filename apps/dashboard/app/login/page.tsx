@@ -1,16 +1,20 @@
 import Link from "next/link";
 import { AuthForm } from "@/components/auth-form";
+import { BrandLockup } from "@/components/brand-lockup";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { BRAND } from "@/lib/brand";
 
 function Visual() {
   return (
     <div className="auth-visual">
       <div>
-        <Link href="/" style={{ color: "inherit", textDecoration: "none", fontFamily: "Fraunces, serif", fontSize: 22 }}>
-          Dyotona
+        <Link href="/" className="auth-brand-link">
+          <BrandLockup as="strong" />
         </Link>
         <h1 style={{ marginTop: 48, fontSize: 42 }}>The storefront finally has a voice.</h1>
-        <p className="bn-line">বাংলা ও ইংরেজিতে — আপনার পণ্য তালিকা থেকে উত্তর।</p>
+        <p className="bn-line">
+          {BRAND.nameBn} — বাংলা ও ইংরেজিতে, আপনার পণ্য তালিকা থেকে উত্তর।
+        </p>
       </div>
       <div className="widget-mock">
         <div className="mh">
@@ -36,11 +40,11 @@ export default function LoginPage() {
           <div className="row" style={{ justifyContent: "flex-end" }}>
             <ThemeToggle />
           </div>
-          <h1>Welcome back</h1>
-          <p className="muted">Tokens, catalog, inbox, analytics.</p>
+          <h2>Sign in</h2>
+          <p className="muted">Merchant dashboard for {BRAND.name}</p>
           <AuthForm mode="login" />
-          <p className="muted">
-            No account? <Link href="/register">Create one</Link>
+          <p className="muted" style={{ marginTop: 16 }}>
+            New here? <Link href="/register">Create an account</Link>
           </p>
         </div>
       </div>

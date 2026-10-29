@@ -5,8 +5,13 @@ export const BRAND = {
   domain: "dyotona.com",
   tagline: "An AI clerk that actually knows your catalog.",
   description:
-    "Dyotona is an embeddable AI shopping agent for small stores. Shoppers chat in English or Bengali against your synced catalog.",
+    "Dyotona (দ্যোতনা) is an embeddable AI shopping agent for small stores. Shoppers chat in English or Bengali against your synced catalog.",
 } as const;
+
+/** "Dyotona · দ্যোতনা" for titles and lockups */
+export function brandPair(separator = " · "): string {
+  return `${BRAND.name}${separator}${BRAND.nameBn}`;
+}
 
 /**
  * Production hosts. Prefer www until apex dyotona.com DNS/TLS is solid —

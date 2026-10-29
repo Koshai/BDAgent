@@ -100,10 +100,12 @@ export function AppShell({
         <div className="sidebar-top">
           <Link href="/app" className="brand" onClick={() => setOpen(false)}>
             <span className="mark" aria-hidden>
-              ব
+              দ
             </span>
             <span>
-              <strong>{BRAND.name}</strong>
+              <strong>
+                {BRAND.name} <span className="brand-bn-inline">{BRAND.nameBn}</span>
+              </strong>
               <span>Merchant</span>
             </span>
           </Link>

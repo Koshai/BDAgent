@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { PublicNav } from "@/components/public-nav";
+import { BrandLockup } from "@/components/brand-lockup";
 import { BRAND } from "@/lib/brand";
 import { publicApiBase } from "@/lib/public";
 
@@ -21,11 +22,14 @@ export default function LandingPage() {
         />
         <div className="hero-bleed-shade" aria-hidden />
         <div className="hero-bleed-copy reveal">
-          <p className="hero-brand">{BRAND.name}</p>
+          <p className="hero-brand">
+            <BrandLockup as="span" />
+          </p>
           <h1>{BRAND.tagline}</h1>
           <p className="hero-lede">
             Embed one script. Shoppers ask in English or বাংলা and get answers from your real catalog—not generic chat.
           </p>
+          <p className="hero-lede-bn bn-line">{BRAND.nameBn} — আপনার দোকানের AI সহকারী।</p>
           <div className="hero-cta">
             <Link className="btn" href="/register">
               Start free
@@ -42,8 +46,9 @@ export default function LandingPage() {
           <p className="kicker">What it does</p>
           <h2>A storefront clerk that reads your inventory</h2>
           <p>
-            Dyotona indexes your products, prices, and policies. When a shopper asks for a gift under ৳7,000 or a
-            jamdani in stock, the agent answers from that index and can send them to the right product page.
+            {BRAND.name} ({BRAND.nameBn}) indexes your products, prices, and policies. When a shopper asks for a gift
+            under ৳7,000 or a jamdani in stock, the agent answers from that index and can send them to the right product
+            page.
           </p>
           <p className="bn-line">ইংরেজি বা বাংলায়—আপনার ক্যাটালগ থেকেই উত্তর।</p>
         </div>
@@ -103,7 +108,7 @@ export default function LandingPage() {
           <p className="kicker">For owners</p>
           <h2>Built for small teams in the US and Bangladesh</h2>
           <p>
-            You keep your existing shop. Dyotona hosts the agent, catalog sync, and OpenAI calls—so storefront pages
+            You keep your existing shop. {BRAND.name} hosts the agent, catalog sync, and OpenAI calls—so storefront pages
             never hold an API key. Tune tone and policies in the dashboard; the widget picks up your brand color.
           </p>
           <Link className="text-link" href="/docs">
@@ -126,7 +131,7 @@ export default function LandingPage() {
       </section>
 
       <footer className="marketing-footer muted">
-        © {new Date().getFullYear()} {BRAND.name} · {BRAND.domain}
+        © {new Date().getFullYear()} {BRAND.name} · {BRAND.nameBn} · {BRAND.domain}
       </footer>
     </div>
   );

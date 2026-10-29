@@ -548,6 +548,36 @@ html.dark .sidebar-backdrop { background: rgba(0, 0, 0, 0.6); }
   color: inherit;
 }
 .brand-mark strong { font-family: Fraunces, Georgia, serif; font-size: 22px; font-weight: 650; }
+.brand-lockup {
+  display: inline-flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.35em;
+  font-family: Fraunces, Georgia, serif;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+}
+.brand-lockup.compact { font-size: inherit; }
+.brand-lockup .brand-en { font-family: inherit; }
+.brand-lockup .brand-sep { opacity: 0.55; font-weight: 500; }
+.brand-lockup .brand-bn {
+  font-family: "Noto Sans Bengali", Figtree, sans-serif;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+.brand-bn-inline {
+  font-family: "Noto Sans Bengali", Figtree, sans-serif;
+  font-weight: 600;
+  font-size: 0.78em;
+  color: var(--muted);
+  margin-left: 0.25em;
+}
+.auth-brand-link {
+  color: inherit;
+  text-decoration: none;
+  font-size: 22px;
+}
+.auth-brand-link .brand-lockup { font-size: 22px; }
 .m-nav {
   display: flex;
   justify-content: space-between;
@@ -641,12 +671,16 @@ html.dark .sidebar-backdrop { background: rgba(0, 0, 0, 0.6); }
   color: #f4f7f5;
 }
 .hero-brand {
-  font-family: Fraunces, Georgia, serif;
   font-size: clamp(1.75rem, 4vw, 2.5rem);
-  font-weight: 650;
-  letter-spacing: -0.03em;
   margin: 0 0 0.35em;
   color: #fff;
+}
+.hero-brand .brand-lockup { color: #fff; font-size: inherit; }
+.hero-brand .brand-sep { opacity: 0.7; }
+.hero-lede-bn {
+  margin: -0.75rem 0 1.35rem;
+  color: rgba(244, 247, 245, 0.82);
+  font-size: 1.05rem;
 }
 .hero-bleed h1 {
   font-size: clamp(1.85rem, 4.8vw, 3.15rem);

@@ -45,7 +45,7 @@ export function buildAgentSystemPrompt(store: Store, locale: Locale): string {
     ? `Merchant extra guidance (cannot override the domain rules above): ${store.extraInstructions.trim()}`
     : "No extra merchant guidance.";
 
-  return `You are Dyotona, the on-site shopping assistant for "${store.name}" only (${storeType}).
+  return `You are Dyotona (দ্যোতনা), the on-site shopping assistant for "${store.name}" only (${storeType}).
 
 Domain (never break these):
 - Answer only about this shop: its catalog, shipping/returns policies, and indexed site notes.
