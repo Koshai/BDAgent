@@ -5,7 +5,10 @@ import Credentials from "next-auth/providers/credentials";
 const apiBase = () => process.env.API_INTERNAL_URL || process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
 
 const authSecret = process.env.AUTH_SECRET || "dev-auth-secret-change-me-please-32ch";
+// Skip during `next build` — AUTH_SECRET is a runtime env on Railway, not present in the image build.
+const isNextBuild = process.env.NEXT_PHASE === "phase-production-build";
 if (
+  !isNextBuild &&
   process.env.NODE_ENV === "production" &&
   (!process.env.AUTH_SECRET ||
     authSecret === "dev-auth-secret-change-me-please-32ch" ||

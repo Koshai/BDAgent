@@ -1,3 +1,9 @@
+/**
+ * Normalize Auth.js / API origins.
+ * Never assign to `process.env.NEXT_PUBLIC_*` — Next.js inlines those as string
+ * literals at build time, which turns `process.env.NEXT_PUBLIC_X = …` into
+ * `"https://… " = …` and crashes the production build.
+ */
 function withOrigin(value: string | undefined, fallbackProtocol = "https"): string | undefined {
   if (!value) return value;
   const trimmed = value.trim().replace(/\/+$/, "");
@@ -13,7 +19,5 @@ if (authUrl) {
 }
 
 const publicApi = withOrigin(process.env.NEXT_PUBLIC_API_URL);
-if (publicApi) process.env.NEXT_PUBLIC_API_URL = publicApi;
-
 const internalApi = withOrigin(process.env.API_INTERNAL_URL) || publicApi;
 if (internalApi) process.env.API_INTERNAL_URL = internalApi;
