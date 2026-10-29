@@ -22,8 +22,8 @@ export default async function SettingsPage({ params }: { params: Promise<{ id: s
       <p className="kicker">Store</p>
       <h1>Settings</h1>
       <p className="muted" style={{ maxWidth: 560, marginBottom: 16 }}>
-        Shopper chat runs on BDAgent's API. Merchants do not add an OpenAI key. The widget only sends the message and
-        page URL; catalog lookup and the model run here.
+        Shopper chat runs on Dyotona&apos;s API. Merchants do not add an OpenAI key. The widget only sends the message
+        and page URL; catalog lookup and the model run here.
       </p>
       <SettingsForm store={store} />
     </>

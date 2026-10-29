@@ -26,6 +26,8 @@ import {
   type IconProps,
 } from "@/components/icons";
 
+import { BRAND } from "@/lib/brand";
+
 type Store = { id: string; name: string; storeType?: string };
 
 const NAV_ICONS: Record<string, ComponentType<IconProps>> = {
@@ -101,7 +103,7 @@ export function AppShell({
               ব
             </span>
             <span>
-              <strong>BDAgent</strong>
+              <strong>{BRAND.name}</strong>
               <span>Merchant</span>
             </span>
           </Link>
@@ -170,7 +172,7 @@ export function AppShell({
             <span className="mark" aria-hidden>
               ব
             </span>
-            <span>{current?.name ?? "BDAgent"}</span>
+            <span>{current?.name ?? BRAND.name}</span>
           </Link>
           <div className="topbar-actions">
             {mounted ? (

@@ -7,7 +7,7 @@ export async function exportBehavior(cp: Checkpoint): Promise<{ events: number; 
   const events = await prisma.event.findMany({
     where: {
       createdAt: { gt: since },
-      type: { in: ["product_view", "product_click", "add_to_cart", "chat_open", "chat_message"] },
+      type: { in: ["product_view", "product_click", "product_impression", "add_to_cart", "chat_open", "message"] },
     },
     orderBy: { createdAt: "asc" },
     take: 500,

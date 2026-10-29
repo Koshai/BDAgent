@@ -7,7 +7,7 @@ function Visual() {
     <div className="auth-visual">
       <div>
         <Link href="/" style={{ color: "inherit", textDecoration: "none", fontFamily: "Fraunces, serif", fontSize: 22 }}>
-          BDAgent
+          Dyotona
         </Link>
         <h1 style={{ marginTop: 48, fontSize: 42 }}>The storefront finally has a voice.</h1>
         <p className="bn-line">বাংলা ও ইংরেজিতে — আপনার পণ্য তালিকা থেকে উত্তর।</p>

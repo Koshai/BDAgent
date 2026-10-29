@@ -3,7 +3,7 @@ import { storeCreateSchema, storeUpdateSchema } from "@bdagent/shared";
 import { prisma } from "../db.js";
 import { requireUser } from "../lib/auth.js";
 import { generateToken } from "../lib/tokens.js";
-import { hostnameFromUrl } from "../lib/domains.js";
+import { hostnameFromUrl, normalizeDomains } from "../lib/domains.js";
 import { DEFAULT_WIDGET_PRIMARY, detectSitePrimaryColor, normalizeHex } from "../services/brand-color.js";
 
 async function loadStore(userId: string, storeId: string) {
@@ -29,12 +29,12 @@ export async function registerStoreRoutes(app: FastifyInstance) {
     if (!parsed.success) return reply.code(400).send({ error: parsed.error.flatten() });
 
     const host = hostnameFromUrl(parsed.data.siteUrl);
-    const allowedDomains =
-      parsed.data.allowedDomains.length > 0
-        ? parsed.data.allowedDomains
-        : host
-          ? [host]
-          : [];
+    const allowedDomains = normalizeDomains(
+      parsed.data.allowedDomains.length > 0 ? parsed.data.allowedDomains : host ? [host] : [],
+    );
+    if (!allowedDomains.length) {
+      return reply.code(400).send({ error: "At least one allowed domain is required (from website URL)" });
+    }
 
     const widget = generateToken("widget");
     const secret = generateToken("secret");
@@ -114,6 +114,19 @@ export async function registerStoreRoutes(app: FastifyInstance) {
     if (!existing) return reply.code(404).send({ error: "Store not found" });
 
     const data = { ...parsed.data } as Record<string, unknown>;
+    if (Array.isArray(data.allowedDomains)) {
+      const domains = normalizeDomains(data.allowedDomains as string[]);
+      if (!domains.length) {
+        return reply.code(400).send({ error: "Allowed domains cannot be empty" });
+      }
+      data.allowedDomains = domains;
+    }
+    if (typeof data.siteUrl === "string" && !Array.isArray(parsed.data.allowedDomains)) {
+      const hostFromSite = hostnameFromUrl(data.siteUrl);
+      if (hostFromSite && !existing.allowedDomains.includes(hostFromSite)) {
+        data.allowedDomains = normalizeDomains([...existing.allowedDomains, hostFromSite]);
+      }
+    }
     if (typeof data.widgetPrimaryColor === "string") {
       const hex = normalizeHex(data.widgetPrimaryColor);
       if (!hex) return reply.code(400).send({ error: "Invalid widgetPrimaryColor" });

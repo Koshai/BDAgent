@@ -1,4 +1,4 @@
-export const metadata = { title: "WooCommerce · BDAgent" };
+export const metadata = { title: "WooCommerce · Dyotona" };
 
 export default function DocsWoo() {
   return (

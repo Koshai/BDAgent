@@ -37,7 +37,7 @@ export async function fetchWooProducts(input: {
 
     const auth = Buffer.from(`${input.consumerKey}:${input.consumerSecret}`).toString("base64");
     const res = await fetch(url, {
-      headers: { Authorization: `Basic ${auth}`, "user-agent": "BDAgent/0.1" },
+      headers: { Authorization: `Basic ${auth}`, "user-agent": "Dyotona/0.1 (+https://dyotona.com)" },
     });
     if (!res.ok) {
       const body = await res.text();
@@ -82,7 +82,7 @@ export async function lookupWooOrder(
   if (!numeric) return null;
   const auth = Buffer.from(`${input.consumerKey}:${input.consumerSecret}`).toString("base64");
   const res = await fetch(`${origin}/wp-json/wc/v3/orders/${numeric}`, {
-    headers: { Authorization: `Basic ${auth}`, "user-agent": "BDAgent/0.1" },
+    headers: { Authorization: `Basic ${auth}`, "user-agent": "Dyotona/0.1 (+https://dyotona.com)" },
   });
   if (!res.ok) return null;
   const order = (await res.json()) as {

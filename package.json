@@ -14,7 +14,8 @@
     "db:push": "pnpm --filter @bdagent/api db:push",
     "db:seed": "pnpm --filter @bdagent/api db:seed",
     "start:api": "pnpm --filter @bdagent/api start:railway",
-    "start:dashboard": "pnpm --filter @bdagent/dashboard start"
+    "start:dashboard": "pnpm --filter @bdagent/dashboard start",
+    "smoke": "node scripts/smoke.mjs"
   },
   "pnpm": {
     "onlyBuiltDependencies": [

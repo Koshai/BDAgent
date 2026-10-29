@@ -5,6 +5,7 @@ import Fastify from "fastify";
 import cors from "@fastify/cors";
 import fastifyStatic from "@fastify/static";
 import { env } from "./env.js";
+import { prisma } from "./db.js";
 import { registerAuthRoutes } from "./routes/auth.js";
 import { registerStoreRoutes } from "./routes/stores.js";
 import { registerWidgetRoutes } from "./routes/widget.js";
@@ -48,11 +49,22 @@ async function main() {
     return reply.sendFile("sitemap.xml");
   });
 
-  app.get("/health", async () => ({
-    ok: true,
-    service: "bdagent-api",
-    llm: Boolean(env.OPENAI_API_KEY),
-  }));
+  app.get("/health", async () => {
+    let db = false;
+    try {
+      await prisma.$queryRaw`SELECT 1`;
+      db = true;
+    } catch {
+      db = false;
+    }
+    return {
+      ok: db,
+      service: "dyotona-api",
+      llm: Boolean(env.OPENAI_API_KEY),
+      db,
+      env: env.NODE_ENV,
+    };
+  });
 
   await registerAuthRoutes(app);
   await registerStoreRoutes(app);

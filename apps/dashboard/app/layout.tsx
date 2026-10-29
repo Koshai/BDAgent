@@ -1,9 +1,11 @@
 import "./globals.css";
 import { Providers } from "@/components/providers";
+import { BRAND } from "@/lib/brand";
 
 export const metadata = {
-  title: "BDAgent",
-  description: "AI shopping agent for ecommerce — English and Bengali",
+  title: BRAND.name,
+  description: BRAND.description,
+  metadataBase: new URL(process.env.NEXTAUTH_URL || process.env.AUTH_URL || "http://localhost:3000"),
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

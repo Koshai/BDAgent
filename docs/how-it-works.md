@@ -18,7 +18,7 @@ widget.js (IIFE)  ──►    /v1/widget/bootstrap
 
 ## What the widget does not do
 
-It does not call OpenAI. Shopper messages go to **BDAgent’s API**. Catalog lookup, site notes, and the model run there. The merchant storefront never holds an API key.
+It does not call OpenAI. Shopper messages go to **Dyotona’s API**. Catalog lookup, site notes, and the model run there. The merchant storefront never holds an API key.
 
 It does not scrape the current page HTML as the source of truth for answers. Products and a short site brief are indexed on scan. The current URL is extra context.
 

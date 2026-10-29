@@ -4,9 +4,20 @@ import Credentials from "next-auth/providers/credentials";
 
 const apiBase = () => process.env.API_INTERNAL_URL || process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
 
+const authSecret = process.env.AUTH_SECRET || "dev-auth-secret-change-me-please-32ch";
+if (
+  process.env.NODE_ENV === "production" &&
+  (!process.env.AUTH_SECRET ||
+    authSecret === "dev-auth-secret-change-me-please-32ch" ||
+    authSecret === "change-me-to-another-long-random-string" ||
+    authSecret.length < 24)
+) {
+  throw new Error("AUTH_SECRET must be a strong unique secret in production");
+}
+
 export const { handlers, signIn, signOut, auth } = NextAuth({
   trustHost: true,
-  secret: process.env.AUTH_SECRET || "dev-auth-secret-change-me-please-32ch",
+  secret: authSecret,
   providers: [
     Credentials({
       credentials: {

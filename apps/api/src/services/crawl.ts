@@ -39,7 +39,7 @@ async function fetchText(url: string): Promise<string | null> {
   try {
     const res = await fetch(url, {
       signal: ctrl.signal,
-      headers: { "user-agent": "BDAgentCatalogBot/0.1 (+https://bdagent.local)" },
+      headers: { "user-agent": "DyotonaCatalogBot/0.1 (+https://dyotona.com)" },
       redirect: "follow",
     });
     if (!res.ok) return null;

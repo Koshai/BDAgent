@@ -56,7 +56,7 @@ That enables:
 - Same-origin add-to-cart: `GET {shop-origin}/?add-to-cart={id}` (classic Woo)
 - Order lookup in the widget (order number + **billing email**)
 
-Keys are encrypted at rest. BDAgent does not use the WooCommerce.com App Store.
+Keys are encrypted at rest. Dyotona does not use the WooCommerce.com App Store.
 
 ## Inbox and handoff
 

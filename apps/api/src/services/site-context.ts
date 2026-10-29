@@ -32,7 +32,7 @@ async function fetchText(url: string): Promise<string | null> {
     const res = await fetch(url, {
       signal: ctrl.signal,
       redirect: "follow",
-      headers: { "user-agent": "BDAgentCatalogBot/0.1" },
+      headers: { "user-agent": "DyotonaCatalogBot/0.1 (+https://dyotona.com)" },
     });
     if (!res.ok) return null;
     const type = res.headers.get("content-type") ?? "";

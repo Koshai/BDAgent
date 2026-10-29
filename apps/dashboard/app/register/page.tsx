@@ -8,7 +8,7 @@ export default function RegisterPage() {
       <div className="auth-visual">
         <div>
           <Link href="/" style={{ color: "inherit", textDecoration: "none", fontFamily: "Fraunces, serif", fontSize: 22 }}>
-            BDAgent
+            Dyotona
           </Link>
           <h1 style={{ marginTop: 48, fontSize: 42 }}>Go live in one snippet.</h1>
           <p className="muted">For SMEs in the US and Bangladesh. WooCommerce-ready catalog sync.</p>

@@ -1,4 +1,4 @@
-export const metadata = { title: "Embed & tokens · BDAgent" };
+export const metadata = { title: "Embed & tokens · Dyotona" };
 
 export default function DocsWidget() {
   return (

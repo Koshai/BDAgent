@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { IconClose, IconMenu } from "@/components/icons";
+import { BRAND } from "@/lib/brand";
 
 export function PublicNav({
   links,
@@ -25,9 +26,9 @@ export function PublicNav({
       <nav className="m-nav">
         <Link href="/" className="brand-mark" onClick={() => setOpen(false)}>
           <span className="mark" aria-hidden>
-            ব
+            দ্য
           </span>
-          <strong>BDAgent</strong>
+          <strong>{BRAND.name}</strong>
         </Link>
         <div className="m-nav-desktop row">
           <ThemeToggle />

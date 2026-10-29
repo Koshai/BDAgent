@@ -1,8 +1,10 @@
-# BDAgent
+# Dyotona
 
 Embeddable AI shopping agent for small and medium ecommerce sites. Merchants paste a script tag; shoppers chat in **English** or **Bengali**; owners get catalog-aware suggestions and basic analytics.
 
-**[Getting started](./docs/getting-started.md)** · **[Railway](./docs/railway.md)** · **[All docs](./docs/README.md)** · in-app: [http://localhost:3000/docs](http://localhost:3000/docs)
+**Production:** [dyotona.com](https://dyotona.com) · API [api.dyotona.com](https://api.dyotona.com)
+
+**[Getting started](./docs/getting-started.md)** · **[Railway + domain](./docs/railway.md)** · **[All docs](./docs/README.md)** · in-app: [http://localhost:3000/docs](http://localhost:3000/docs)
 
 ## Apps
 
@@ -10,6 +12,8 @@ Embeddable AI shopping agent for small and medium ecommerce sites. Merchants pas
 - `apps/api` — widget runtime, catalog sync, chat, analytics (Fastify + Prisma)
 - `packages/widget` — Shadow DOM chat bundle (`widget.js`)
 - `packages/shared` — i18n, Zod schemas, event types
+
+> Package names still use `@bdagent/*` in the monorepo; the product brand is **Dyotona**.
 
 ## Quick start
 
@@ -46,21 +50,10 @@ Seeded merchant: `merchant@bdagent.dev` / `password123`
 
 ```html
 <script
-  src="http://localhost:4000/widget.js"
+  src="https://api.dyotona.com/widget.js"
   data-token="wgt_YOUR_TOKEN"
   async>
 </script>
 ```
 
-The **widget token** is public and domain-locked. The **secret key** stays in the dashboard. Full walkthrough: [merchant guide](./docs/merchant-guide.md).
-
-## Catalog
-
-- **Crawl** — public JSON-LD / Open Graph / listing markup
-- **WooCommerce** — REST consumer key/secret the merchant pastes (native cart + order lookup)
-
-Optional LLM: set `OPENAI_API_KEY` in `apps/api/.env`. Without a key, the agent still returns catalog matches.
-
-## Stack
-
-PostgreSQL 16 (Docker on port **55432**), Fastify, Next.js 15, Auth.js credentials, Vite IIFE widget.
+Locally, use `http://localhost:4000/widget.js` instead.

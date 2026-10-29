@@ -121,7 +121,7 @@ export function mountWidget() {
   const wrap = document.createElement("div");
   wrap.className = "wrap";
   wrap.innerHTML = `
-    <div class="panel" role="dialog" aria-label="BDAgent">
+    <div class="panel" role="dialog" aria-label="Dyotona">
       <div class="head">
         <span class="live"></span>
         <div class="brand"><h2></h2><p></p></div>
@@ -339,6 +339,14 @@ export function mountWidget() {
     trackBtn.hidden = !boot.hasWoo;
     wrap.querySelector(".tools")?.toggleAttribute("hidden", !boot.hasWoo);
     void emit("page_view");
+    const productNode = document.querySelector("[data-product_id], [data-product-id]");
+    const productIdAttr =
+      productNode?.getAttribute("data-product_id") || productNode?.getAttribute("data-product-id") || undefined;
+    if (productIdAttr || /product|item|p=\d+/i.test(location.pathname + location.search)) {
+      void emit("product_view", {
+        metadata: { externalId: productIdAttr, url: location.href },
+      });
+    }
   }
 
   fab.addEventListener("click", () => {

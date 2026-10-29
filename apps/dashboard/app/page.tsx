@@ -1,27 +1,33 @@
 import Link from "next/link";
 import { PublicNav } from "@/components/public-nav";
 import { IconChart, IconCode, IconMessage } from "@/components/icons";
+import { BRAND } from "@/lib/brand";
+import { publicApiBase } from "@/lib/public";
 
 export default function LandingPage() {
+  const api = publicApiBase();
   return (
     <div className="marketing">
       <PublicNav />
       <section className="hero">
         <div>
-          <p className="kicker">For small & medium stores · US + Bangladesh</p>
-          <h1>An AI clerk that actually knows your catalog.</h1>
+          <p className="kicker">
+            {BRAND.name} · for small &amp; medium stores · US + Bangladesh
+          </p>
+          <h1>{BRAND.tagline}</h1>
           <p className="bn-line">ইংরেজি বা বাংলায় কেনাকাটা — স্নিপেট বসিয়েই চালু।</p>
           <p className="muted" style={{ maxWidth: 520, marginBottom: 24 }}>
-            Paste one script. Shoppers get grounded answers and product cards. You get inbox, popularity, and a bilingual agent.
+            Paste one script. Shoppers get grounded answers and product cards. You get inbox, popularity, and a
+            bilingual agent powered by {BRAND.name}.
           </p>
           <div className="row">
             <Link className="btn" href="/register">
               Create a merchant account
             </Link>
-            <a className="btn secondary" href="http://localhost:4000/demo/">
+            <a className="btn secondary" href={`${api}/demo/`} target="_blank" rel="noreferrer">
               Catalog demo
             </a>
-            <a className="btn secondary" href="http://localhost:4000/demo/woo/">
+            <a className="btn secondary" href={`${api}/demo/woo/`} target="_blank" rel="noreferrer">
               Woo demo
             </a>
           </div>
@@ -64,6 +70,9 @@ export default function LandingPage() {
           <p className="muted">Inbox, language split, popular products, and a simple sales funnel.</p>
         </article>
       </section>
+      <footer className="marketing-footer muted">
+        © {new Date().getFullYear()} {BRAND.name} · {BRAND.domain}
+      </footer>
     </div>
   );
 }

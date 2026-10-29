@@ -1,6 +1,7 @@
 import type { FastifyReply } from "fastify";
 import type { Locale } from "@bdagent/shared";
 import type { Product, Store } from "@prisma/client";
+import { prisma } from "../db.js";
 import { env } from "../env.js";
 import { buildAgentSystemPrompt } from "./agent-prompt.js";
 import { retrieveProducts, serializeProduct } from "./rag.js";
@@ -47,6 +48,19 @@ function sse(reply: FastifyReply, obj: unknown) {
   reply.raw.write(`data: ${JSON.stringify(obj)}\n\n`);
 }
 
+async function loadRecentTurns(conversationId: string, limit = 6) {
+  const rows = await prisma.message.findMany({
+    where: {
+      conversationId,
+      role: { in: ["user", "assistant"] },
+    },
+    orderBy: { createdAt: "desc" },
+    take: limit,
+    select: { role: true, content: true },
+  });
+  return rows.reverse();
+}
+
 async function* streamLlmText(input: {
   store: Store;
   locale: Locale;
@@ -54,13 +68,21 @@ async function* streamLlmText(input: {
   pageTitle?: string;
   pageUrl: string;
   products: Product[];
+  history: Array<{ role: string; content: string }>;
 }): AsyncGenerator<string> {
   const system = buildAgentSystemPrompt(input.store, input.locale);
+
+  const historyMessages = input.history
+    .filter((m) => m.role === "user" || m.role === "assistant")
+    .map((m) => ({
+      role: m.role as "user" | "assistant",
+      content: m.content.slice(0, 1200),
+    }));
 
   const user = `Shopper page: ${input.pageTitle || ""} ${input.pageUrl}
 Shopper message: ${input.message}
 
-Catalog:
+Catalog (only source of product truth — never invent outside this list):
 ${catalogBlock(input.products)}`;
 
   const res = await fetch(`${env.OPENAI_BASE_URL.replace(/\/$/, "")}/chat/completions`, {
@@ -73,10 +95,7 @@ ${catalogBlock(input.products)}`;
       model: env.OPENAI_MODEL,
       temperature: 0.4,
       stream: true,
-      messages: [
-        { role: "system", content: system },
-        { role: "user", content: user },
-      ],
+      messages: [{ role: "system", content: system }, ...historyMessages, { role: "user", content: user }],
     }),
   });
   if (!res.ok || !res.body) {
@@ -131,7 +150,7 @@ export async function streamChat(
     sse(reply, { type: "token", text });
     sse(reply, { type: "handoff", active: true });
     sse(reply, { type: "done" });
-    return { reply: text, products: [] as ReturnType<typeof serializeProduct>[] };
+    return { reply: text, products: [] as ReturnType<typeof serializeProduct>[], retrievedIds: [] as string[] };
   }
 
   const emailMatch = input.message.match(/[\w.+-]+@[\w.-]+\.[a-z]{2,}/i);
@@ -145,7 +164,7 @@ export async function streamChat(
           : "Order tracking needs WooCommerce connected on this store. Share the order number and the email used at checkout.";
       sse(reply, { type: "token", text });
       sse(reply, { type: "done" });
-      return { reply: text, products: [] as ReturnType<typeof serializeProduct>[] };
+      return { reply: text, products: [] as ReturnType<typeof serializeProduct>[], retrievedIds: [] as string[] };
     }
     if (!emailMatch) {
       const text =
@@ -154,7 +173,7 @@ export async function streamChat(
           : `To look up order ${orderMatch[1]}, send the email used at checkout.`;
       sse(reply, { type: "token", text });
       sse(reply, { type: "done" });
-      return { reply: text, products: [] as ReturnType<typeof serializeProduct>[] };
+      return { reply: text, products: [] as ReturnType<typeof serializeProduct>[], retrievedIds: [] as string[] };
     }
     const found = await lookupWooOrder(creds, orderMatch[1], emailMatch[0]);
     const text = found
@@ -166,18 +185,29 @@ export async function streamChat(
         : "No order matched that number and email. Check both and try again.";
     sse(reply, { type: "token", text });
     sse(reply, { type: "done" });
-    return { reply: text, products: [] as ReturnType<typeof serializeProduct>[] };
+    return { reply: text, products: [] as ReturnType<typeof serializeProduct>[], retrievedIds: [] as string[] };
   }
+
+  const history = await loadRecentTurns(input.conversationId, 6);
+  // Exclude the user message we just saved so it is not duplicated in history
+  const prior = history.slice(0, -1);
+  const contextQuery = prior
+    .filter((m) => m.role === "user")
+    .map((m) => m.content)
+    .join(" ")
+    .slice(0, 500);
 
   const ranked = await retrieveProducts({
     storeId: input.store.id,
     query: input.message,
+    contextQuery,
     pageUrl: input.pageUrl,
     visitorId: input.visitorId,
     limit: 8,
   });
 
   let full = "";
+  let usedLlm = false;
   if (env.OPENAI_API_KEY && ranked.length) {
     try {
       for await (const piece of streamLlmText({
@@ -187,11 +217,15 @@ export async function streamChat(
         pageTitle: input.pageTitle,
         pageUrl: input.pageUrl,
         products: ranked,
+        history: prior,
       })) {
         full += piece;
+        usedLlm = true;
         sse(reply, { type: "token", text: piece });
       }
-    } catch {
+    } catch (err) {
+      const detail = err instanceof Error ? err.message : "LLM failed";
+      sse(reply, { type: "warning", text: detail.slice(0, 120) });
       full = "";
     }
   }
@@ -207,6 +241,6 @@ export async function streamChat(
   const picked = (mentioned.length ? mentioned : ranked).slice(0, 3);
   const products = picked.map(serializeProduct);
   sse(reply, { type: "products", products });
-  sse(reply, { type: "done" });
-  return { reply: full, products };
+  sse(reply, { type: "done", usedLlm });
+  return { reply: full, products, retrievedIds: ranked.map((p) => p.id) };
 }

@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-export const metadata = { title: "Catalog · BDAgent" };
+export const metadata = { title: "Catalog · Dyotona" };
 
 export default function DocsCatalog() {
   return (
@@ -14,7 +14,7 @@ export default function DocsCatalog() {
 
       <h2>Scan site &amp; offers</h2>
       <p>
-        On Overview, run a scan. BDAgent fetches the store URL, common listing paths, sitemap when present, then product
+        On Overview, run a scan. Dyotona fetches the store URL, common listing paths, sitemap when present, then product
         markup: JSON-LD, Open Graph, Woo loop attributes, and same-host links one click from the homepage.
       </p>
       <p>

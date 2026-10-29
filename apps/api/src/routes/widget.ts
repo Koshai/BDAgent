@@ -125,30 +125,63 @@ export async function registerWidgetRoutes(app: FastifyInstance) {
       "access-control-allow-origin": (req.headers.origin as string) || "*",
     });
 
-    const result = await streamChat(reply, {
-      store,
-      visitorId: parsed.data.visitorId,
-      conversationId: conversation.id,
-      message: parsed.data.message,
-      locale: parsed.data.locale,
-      pageUrl: parsed.data.page.url,
-      pageTitle: parsed.data.page.title,
-      handoff: conversation.handoff,
-    });
-
-    await prisma.message.create({
-      data: {
+    try {
+      const result = await streamChat(reply, {
+        store,
+        visitorId: parsed.data.visitorId,
         conversationId: conversation.id,
-        role: "assistant",
-        content: result.reply,
-        products: result.products,
-      },
-    });
-    await prisma.conversation.update({
-      where: { id: conversation.id },
-      data: { locale: parsed.data.locale },
-    });
-    reply.raw.end();
+        message: parsed.data.message,
+        locale: parsed.data.locale,
+        pageUrl: parsed.data.page.url,
+        pageTitle: parsed.data.page.title,
+        handoff: conversation.handoff,
+      });
+
+      await prisma.message.create({
+        data: {
+          conversationId: conversation.id,
+          role: "assistant",
+          content: result.reply,
+          products: result.products,
+        },
+      });
+      await prisma.conversation.update({
+        where: { id: conversation.id },
+        data: { locale: parsed.data.locale },
+      });
+
+      // Persist RAG impressions so future retrieval learns from what was shown
+      for (const p of result.products) {
+        await prisma.event.create({
+          data: {
+            storeId: store.id,
+            type: "product_impression",
+            productId: p.id,
+            visitorId: parsed.data.visitorId,
+            locale: parsed.data.locale,
+            path: parsed.data.page.url,
+            metadata: {
+              source: "chat_card",
+              retrievedIds: result.retrievedIds ?? [],
+            },
+          },
+        });
+      }
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "Chat failed";
+      try {
+        reply.raw.write(`data: ${JSON.stringify({ type: "error", text: message.slice(0, 200) })}\n\n`);
+        reply.raw.write(`data: ${JSON.stringify({ type: "done" })}\n\n`);
+      } catch {
+        /* socket already closed */
+      }
+    } finally {
+      try {
+        reply.raw.end();
+      } catch {
+        /* ignore */
+      }
+    }
   });
 
   app.post("/v1/widget/order-status", async (req, reply) => {

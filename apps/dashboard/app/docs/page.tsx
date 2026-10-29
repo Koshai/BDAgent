@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-export const metadata = { title: "Getting started · BDAgent" };
+export const metadata = { title: "Getting started · Dyotona" };
 
 export default function DocsHome() {
   return (

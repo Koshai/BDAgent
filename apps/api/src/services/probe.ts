@@ -20,7 +20,7 @@ async function fetchMeta(url: string): Promise<{ status: number; text: string; j
     const res = await fetch(url, {
       signal: ctrl.signal,
       redirect: "follow",
-      headers: { "user-agent": "BDAgentCatalogBot/0.1" },
+      headers: { "user-agent": "DyotonaCatalogBot/0.1 (+https://dyotona.com)" },
     });
     const text = await res.text();
     let json: unknown = null;
@@ -147,7 +147,7 @@ export async function probeCommerce(siteUrl: string): Promise<CommerceProbe> {
     kind === "woocommerce"
       ? "Looks like WooCommerce. Public crawl can index offers; real cart and order status need REST keys you paste."
       : kind === "shopify"
-        ? "Looks like Shopify. Offers can be crawled from public pages. There is no Shopify App Store connect in BDAgent."
+        ? "Looks like Shopify. Offers can be crawled from public pages. There is no Shopify App Store connect in Dyotona."
         : kind === "magento"
           ? "Looks like Magento. Offers can be crawled from public pages; cart stays on the merchant checkout."
           : kind === "generic"

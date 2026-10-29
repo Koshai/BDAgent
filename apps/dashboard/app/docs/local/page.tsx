@@ -1,4 +1,4 @@
-export const metadata = { title: "Local setup · BDAgent" };
+export const metadata = { title: "Local setup · Dyotona" };
 
 export default function DocsLocal() {
   return (
@@ -14,13 +14,13 @@ pnpm db:up
 pnpm install
 pnpm db:push
 pnpm db:seed
-pnpm --filter @bdagent/widget build
+pnpm --filter @Dyotona/widget build
 pnpm dev`}</pre>
       <p>
         Dashboard: <a href="http://localhost:3000">localhost:3000</a> · app:{" "}
         <a href="http://localhost:3000/app">/app</a>
         <br />
-        Seeded login: <code>merchant@bdagent.dev</code> / <code>password123</code>
+        Seeded login: <code>merchant@Dyotona.dev</code> / <code>password123</code>
       </p>
       <p>
         Optional: set <code>OPENAI_API_KEY</code> in <code>apps/api/.env</code>. Without it, chat still returns catalog

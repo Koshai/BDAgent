@@ -53,7 +53,7 @@ Optional LLM: set `OPENAI_API_KEY` in `apps/api/.env`. Without it, chat still re
 
 If `prisma generate` fails on Windows with `EPERM` on `query_engine-windows.dll.node`, stop `pnpm dev:api`, generate, then start the API again.
 
-To put this on Railway for a client preview (no custom domain yet): [Railway](./railway.md).
+Production host: [dyotona.com via Railway](./railway.md) (`dyotona.com` → dashboard, `api.dyotona.com` → API).
 
 ## 2. First store (10 minutes)
 

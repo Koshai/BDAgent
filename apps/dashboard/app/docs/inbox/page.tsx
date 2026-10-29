@@ -1,4 +1,4 @@
-export const metadata = { title: "Inbox & orders · BDAgent" };
+export const metadata = { title: "Inbox & orders · Dyotona" };
 
 export default function DocsInbox() {
   return (
