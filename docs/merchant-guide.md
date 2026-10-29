@@ -4,13 +4,13 @@
 
 ```html
 <script
-  src="http://localhost:4000/widget.js"
+  src="https://api.dyotona.com/widget.js"
   data-token="wgt_YOUR_TOKEN"
   async>
 </script>
 ```
 
-In production, point `src` at your API origin (the same host that serves `/widget.js`).
+Locally use `http://localhost:4000/widget.js` instead.
 
 The widget loads in a Shadow DOM. It does not require renaming routes. Unusual paths (`/bags`, `/?p=123`) keep working.
 

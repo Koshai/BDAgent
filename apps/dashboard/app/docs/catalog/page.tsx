@@ -1,6 +1,7 @@
 import Link from "next/link";
+import { BRAND, PROD_HOSTS } from "@/lib/brand";
 
-export const metadata = { title: "Catalog · Dyotona" };
+export const metadata = { title: `Catalog · ${BRAND.name}` };
 
 export default function DocsCatalog() {
   return (
@@ -14,17 +15,21 @@ export default function DocsCatalog() {
 
       <h2>Scan site &amp; offers</h2>
       <p>
-        On Overview, run a scan. Dyotona fetches the store URL, common listing paths, sitemap when present, then product
-        markup: JSON-LD, Open Graph, Woo loop attributes, and same-host links one click from the homepage.
+        On Overview, run a scan. {BRAND.name} fetches the store URL, common listing paths, sitemap when present, then
+        product markup: JSON-LD, Open Graph, Woo loop attributes, and same-host links one click from the homepage.
       </p>
       <p>
         Scan also classifies the store as <strong>Custom site</strong> or <strong>WooCommerce</strong> from public HTML
         and <code>/wp-json/</code>. You can set the type when you create the store or in Settings.
       </p>
       <p>
-        Product pages: title, price, image, and the longest description available (JSON-LD, Woo tabs, page body). Listing
-        cards without a description stay title/price until that product URL is crawled. Scan also reads About / shipping /
-        returns pages and stores a site brief for the agent.
+        Product pages store title, price, image, and the longest description available. Scan also reads About / shipping /
+        returns pages into a site brief for the agent.
+      </p>
+
+      <h2>Nightly auto-sync</h2>
+      <p>
+        In Settings you can enable automatic re-indexing so the catalog stays fresh without a manual scan every day.
       </p>
 
       <h2>When to use Woo REST instead</h2>
@@ -38,6 +43,20 @@ export default function DocsCatalog() {
         Shipping and returns text in Settings is included as context so the agent can quote your rules instead of
         inventing them.
       </p>
+
+      <h2>Public demos</h2>
+      <ul>
+        <li>
+          <a href={`${PROD_HOSTS.api}/demo/`} target="_blank" rel="noreferrer">
+            Catalog demo
+          </a>
+        </li>
+        <li>
+          <a href={`${PROD_HOSTS.api}/demo/woo/`} target="_blank" rel="noreferrer">
+            WooCommerce demo
+          </a>
+        </li>
+      </ul>
     </>
   );
 }

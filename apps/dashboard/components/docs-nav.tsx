@@ -19,7 +19,7 @@ export function DocsNav() {
   const [open, setOpen] = useState(false);
 
   return (
-    <>
+    <aside className="docs-aside">
       <button type="button" className="docs-nav-toggle btn secondary" onClick={() => setOpen((v) => !v)}>
         {open ? <IconClose size={16} /> : <IconMenu size={16} />}
         {open ? "Close" : "Browse topics"}
@@ -32,6 +32,6 @@ export function DocsNav() {
           </Link>
         ))}
       </nav>
-    </>
+    </aside>
   );
 }

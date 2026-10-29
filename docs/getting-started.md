@@ -60,7 +60,7 @@ Production host: [dyotona.com via Railway](./railway.md) (`dyotona.com` → dash
 1. Sign in at `/login` (or register).
 2. **Add a store** — name, public site URL, default language, currency. Allowed domains default to the site hostname; add extra hosts if the shop is served from `www` or a staging domain.
 3. **Index the catalog** — **Scan site & offers** on Overview, or connect WooCommerce REST keys and sync.
-4. **Embed** — copy the snippet and widget token onto the live site (before `</body>`).
+4. **Embed** — copy the snippet and widget token onto the live site (before `</body>`). Production `src` is `https://api.dyotona.com/widget.js`.
 5. Load a product page, open the chat bubble, ask in English or বাংলা.
 
 The full token is shown **once** at create (and once after rotate). After that the dashboard only stores a prefix and a hash.
