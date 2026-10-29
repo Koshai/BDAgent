@@ -1,5 +1,6 @@
 "use server";
 
+import { redirect } from "next/navigation";
 import { signOut } from "@/auth";
 import { api } from "@/lib/api";
 
@@ -82,5 +83,8 @@ export async function detectWidgetColor(id: string) {
 }
 
 export async function signOutAction() {
-  await signOut({ redirectTo: "/" });
+  // Clear session without Auth.js absolute redirect (that used NEXTAUTH_URL /
+  // apex dyotona.com and broke when only www was live). Stay on the current host.
+  await signOut({ redirect: false });
+  redirect("/");
 }

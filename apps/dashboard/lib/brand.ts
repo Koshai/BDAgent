@@ -8,9 +8,13 @@ export const BRAND = {
     "Dyotona is an embeddable AI shopping agent for small stores. Shoppers chat in English or Bengali against your synced catalog.",
 } as const;
 
-/** Production hosts once DNS is pointed at Railway */
+/**
+ * Production hosts. Prefer www until apex dyotona.com DNS/TLS is solid —
+ * Auth redirects and docs links should not send users to an unresolved apex.
+ */
 export const PROD_HOSTS = {
-  app: "https://dyotona.com",
+  app: "https://www.dyotona.com",
   www: "https://www.dyotona.com",
+  apex: "https://dyotona.com",
   api: "https://api.dyotona.com",
 } as const;

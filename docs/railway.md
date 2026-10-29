@@ -73,9 +73,9 @@ Do not seed on every deploy. Change the seeded password before any real use.
 | Name | Value |
 | --- | --- |
 | `AUTH_SECRET` | Long random string (32+ chars) |
-| `NEXTAUTH_URL` | `https://dyotona.com` (or `https://www.dyotona.com` if that is your canonical host) |
+| `NEXTAUTH_URL` | Canonical dashboard origin you actually use, e.g. `https://www.dyotona.com` (must resolve; avoid apex until DNS works) |
 | `NEXT_PUBLIC_API_URL` | `https://api.dyotona.com` |
-| `API_INTERNAL_URL` | `https://api.dyotona.com` (or the API’s private Railway URL) |
+| `API_INTERNAL_URL` | Railway API URL until `api.dyotona.com` resolves, then that host |
 | `AUTH_TRUST_HOST` | `true` |
 | `NODE_ENV` | `production` |
 
@@ -127,13 +127,13 @@ Wait until Railway marks each domain **Verified** / certificate issued (often a 
 On the **dashboard** service, set:
 
 ```text
-NEXTAUTH_URL=https://dyotona.com
+NEXTAUTH_URL=https://www.dyotona.com
 NEXT_PUBLIC_API_URL=https://api.dyotona.com
-API_INTERNAL_URL=https://api.dyotona.com
+API_INTERNAL_URL=https://YOUR-API.up.railway.app
 AUTH_TRUST_HOST=true
 ```
 
-If you prefer `www` as canonical, use `https://www.dyotona.com` for `NEXTAUTH_URL` and redirect apex → www at the registrar or Railway if available.
+Use the Railway API URL for `API_INTERNAL_URL` until `api.dyotona.com` DNS resolves (server-side login/register). Set `NEXTAUTH_URL` to **`https://www.dyotona.com`** while apex is broken—Auth.js redirects follow that value. When apex works, you can switch to `https://dyotona.com` or keep www and redirect apex → www.
 
 **Redeploy the dashboard** after changing `NEXT_PUBLIC_API_URL` or `NEXTAUTH_URL`.
 
@@ -141,11 +141,10 @@ If you prefer `www` as canonical, use `https://www.dyotona.com` for `NEXTAUTH_UR
 
 | Check | Expect |
 | --- | --- |
-| `https://dyotona.com` | Dyotona homepage |
-| `https://www.dyotona.com` | Same (or redirect) |
-| `https://api.dyotona.com/health` | `{ "ok": true }` |
-| `https://api.dyotona.com/widget.js` | JavaScript bundle |
-| Login / register | Works with cookies on dyotona.com |
+| `https://www.dyotona.com` | Dyotona homepage (use this while apex DNS is pending) |
+| `https://dyotona.com` | Same once apex DNS works (optional redirect → www) |
+| API health / widget | Railway API URL or `https://api.dyotona.com` when DNS is green |
+| Login / register / sign-out | Stay on `www.dyotona.com` |
 
 ```bash
 API_URL=https://api.dyotona.com pnpm smoke
