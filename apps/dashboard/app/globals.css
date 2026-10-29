@@ -588,24 +588,193 @@ html.dark .sidebar-backdrop { background: rgba(0, 0, 0, 0.6); }
 }
 .mobile-drawer-nav { padding: 12px; display: flex; flex-direction: column; gap: 4px; }
 
-.hero {
-  display: grid;
-  grid-template-columns: 1.05fr 0.95fr;
-  gap: 40px;
-  align-items: center;
-  padding: 32px 5vw 64px;
+.kicker {
+  color: var(--jade);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 12px;
+  margin: 0 0 12px;
 }
-.hero h1 { font-size: clamp(2rem, 5.5vw, 3.75rem); line-height: 1.08; }
-.kicker { color: var(--jade); font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; font-size: 12px; margin: 0 0 12px; }
-.bn-line { font-family: "Noto Sans Bengali", Figtree, sans-serif; font-size: 18px; color: var(--muted); margin: 0 0 22px; }
-.steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; padding: 0 5vw 48px; }
-.steps .card { height: 100%; }
+.bn-line {
+  font-family: "Noto Sans Bengali", Figtree, sans-serif;
+  font-size: 1.05rem;
+  color: var(--muted);
+  margin: 0.75rem 0 0;
+}
+.text-link {
+  display: inline-block;
+  margin-top: 1rem;
+  font-weight: 600;
+  color: var(--jade);
+}
+.text-link:hover { color: var(--jade-2); }
+
+/* Full-bleed hero */
+.hero-bleed {
+  position: relative;
+  min-height: min(92vh, 820px);
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+  background: #1a221e;
+}
+.hero-bleed-img {
+  object-fit: cover;
+  object-position: center 40%;
+  animation: hero-drift 28s var(--ease) infinite alternate;
+}
+.hero-bleed-shade {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    linear-gradient(105deg, rgba(8, 14, 12, 0.88) 0%, rgba(8, 14, 12, 0.55) 42%, rgba(8, 14, 12, 0.2) 70%, transparent 100%),
+    linear-gradient(to top, rgba(8, 14, 12, 0.55) 0%, transparent 45%);
+  pointer-events: none;
+}
+.hero-bleed-copy {
+  position: relative;
+  z-index: 2;
+  padding: clamp(48px, 8vw, 96px) 5vw clamp(56px, 7vw, 88px);
+  max-width: 640px;
+  color: #f4f7f5;
+}
+.hero-brand {
+  font-family: Fraunces, Georgia, serif;
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-weight: 650;
+  letter-spacing: -0.03em;
+  margin: 0 0 0.35em;
+  color: #fff;
+}
+.hero-bleed h1 {
+  font-size: clamp(1.85rem, 4.8vw, 3.15rem);
+  line-height: 1.08;
+  color: #fff;
+  margin: 0 0 0.65em;
+  max-width: 14ch;
+}
+.hero-lede {
+  margin: 0 0 1.5rem;
+  font-size: 1.05rem;
+  line-height: 1.55;
+  color: rgba(244, 247, 245, 0.88);
+  max-width: 38ch;
+}
+.hero-cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.hero-bleed .btn.secondary {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.35);
+  color: #fff;
+}
+.hero-bleed .btn.secondary:hover {
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+}
+
+.m-section {
+  padding: clamp(56px, 9vw, 104px) 5vw;
+}
+.m-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(28px, 5vw, 64px);
+  align-items: center;
+  max-width: 1180px;
+  margin: 0 auto;
+}
+.m-split-rev { direction: ltr; }
+.m-copy h2 {
+  font-size: clamp(1.65rem, 3.2vw, 2.35rem);
+  max-width: 18ch;
+  margin-bottom: 0.75em;
+}
+.m-copy p { margin: 0; color: var(--ink); max-width: 42ch; }
+.m-copy p + p { margin-top: 0.85rem; }
+.m-photo {
+  margin: 0;
+  overflow: hidden;
+  border-radius: 4px;
+  background: var(--paper-2);
+}
+.m-photo img {
+  display: block;
+  width: 100%;
+  height: auto;
+  vertical-align: middle;
+}
+
+.m-how {
+  background:
+    radial-gradient(700px 280px at 10% 0%, var(--jade-soft), transparent 60%),
+    var(--paper);
+  border-block: 1px solid var(--line);
+}
+.m-how-head {
+  max-width: 640px;
+  margin: 0 auto 2.5rem;
+  text-align: center;
+}
+.m-how-head h2 {
+  font-size: clamp(1.65rem, 3.2vw, 2.35rem);
+  margin-bottom: 0.4em;
+}
+.m-how-list {
+  list-style: none;
+  margin: 0 auto;
+  padding: 0;
+  max-width: 720px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+.m-how-list li {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1rem 1.25rem;
+  align-items: start;
+}
+.m-how-list h3 {
+  font-family: Fraunces, Georgia, serif;
+  font-size: 1.25rem;
+  margin: 0 0 0.25em;
+}
+.m-how-list p { margin: 0; }
+.m-num {
+  font-family: Fraunces, Georgia, serif;
+  font-size: 1.5rem;
+  font-weight: 650;
+  color: var(--jade);
+  line-height: 1.2;
+  min-width: 1.5rem;
+}
+
+.m-cta {
+  text-align: center;
+  padding: clamp(56px, 9vw, 96px) 5vw;
+  background:
+    linear-gradient(180deg, var(--paper) 0%, var(--jade-soft) 100%);
+}
+.m-cta h2 {
+  font-size: clamp(1.65rem, 3.2vw, 2.35rem);
+  max-width: 18ch;
+  margin: 0 auto 0.5em;
+}
+.m-cta .muted { margin: 0 auto 1.5rem; max-width: 36ch; }
+.m-cta .hero-cta { justify-content: center; }
+
 .marketing-footer {
   padding: 24px 5vw 48px;
   border-top: 1px solid var(--line);
   font-size: 0.9rem;
 }
-.step-title { display: flex; align-items: center; gap: 8px; }
+
+/* Kept for auth / other pages that still use the mock */
 .widget-mock {
   background: var(--surface);
   border: 1px solid var(--line);
@@ -624,12 +793,33 @@ html.dark .widget-mock .mh { background: #0a100e; }
 .mock-bubble.u { align-self: flex-end; background: var(--jade); color: #fff; }
 html.dark .mock-bubble.u { color: #06140f; }
 
+@keyframes hero-drift {
+  from { transform: scale(1.02) translate3d(0, 0, 0); }
+  to { transform: scale(1.08) translate3d(-1.5%, -1%, 0); }
+}
+@keyframes reveal-up {
+  from { opacity: 0; transform: translate3d(0, 18px, 0); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+.reveal {
+  animation: reveal-up 0.7s var(--ease) both;
+}
+.m-how-list li.reveal:nth-child(2) { animation-delay: 80ms; }
+.m-how-list li.reveal:nth-child(3) { animation-delay: 160ms; }
+
 @media (max-width: 900px) {
-  .hero, .steps { grid-template-columns: 1fr; }
-  .hero { padding-top: 24px; }
+  .m-split { grid-template-columns: 1fr; }
+  .m-split-rev .m-photo { order: -1; }
+  .hero-bleed { min-height: min(88vh, 720px); align-items: flex-end; }
+  .hero-bleed h1 { max-width: none; }
   .m-nav-desktop { display: none; }
   .m-nav-mobile { display: flex; }
-  .hero .row .btn { flex: 1 1 auto; justify-content: center; min-width: min(100%, 160px); }
+  .hero-cta .btn { flex: 1 1 auto; justify-content: center; min-width: min(100%, 140px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-bleed-img { animation: none; }
+  .reveal { animation: none; }
 }
 
 /* Auth */

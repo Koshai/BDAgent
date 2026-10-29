@@ -4,7 +4,8 @@ export const BRAND = {
   nameBn: "দ্যোতনা",
   domain: "dyotona.com",
   tagline: "An AI clerk that actually knows your catalog.",
-  description: "AI shopping agent for ecommerce — English and Bengali",
+  description:
+    "Dyotona is an embeddable AI shopping agent for small stores. Shoppers chat in English or Bengali against your synced catalog.",
 } as const;
 
 /** Production hosts once DNS is pointed at Railway */
